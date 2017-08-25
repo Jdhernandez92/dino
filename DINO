@@ -3,12 +3,12 @@ Modified version of code from http://www.instructables.com/id/Motion-Activated-L
 and https://gist.github.com/stonehippo/308a5f5c49d4981ac976
 */
 
-int Eyes = 7
+int Eyes = 4;
 int pirState = LOW;
 int pirVal = 0;
 int pirPin = 12;
-int PIN = 8
-int LED = 13
+int PIN = 8;
+int LED = 13;
 
 
 void setup()  {
@@ -16,8 +16,7 @@ void setup()  {
   Serial.begin(9600);
   pinMode(pirPin, INPUT);
   pinMode(LED, OUTPUT);
-  pinMode(LeftEye, OUTPUT);
-  pinMode(RightEye, OUTPUT);
+  pinMode(Eyes, OUTPUT);
   setupSound(PIN);
   delay(500);
   }
