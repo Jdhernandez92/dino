@@ -3,13 +3,12 @@ Modified version of code from http://www.instructables.com/id/Motion-Activated-L
 and https://gist.github.com/stonehippo/308a5f5c49d4981ac976
 */
 
-int LeftEye = 7
-int RightEye = 4
+int Eyes = 7
 int pirState = LOW;
 int pirVal = 0;
 int pirPin = 12;
-#define PIN 8
-#define LED 13
+int PIN = 8
+int LED = 13
 
 
 void setup()  {
@@ -26,13 +25,11 @@ void setup()  {
 void loop() {
   pirVal = digitalRead(pirPin)
   if (pirVal == HIGH) {
-    digitalWrite(LeftEye, HIGH);
-    digitalWrite(RightEye, HIGH);
+    digitalWrite(Eyes, HIGH);
     delay(500);
     activateSound(PIN);
     delay(7000);
-    digitalWrite(LeftEye, LOW);
-    digitalWrite(RightEye, LOW);
+    digitalWrite(Eyes, LOW);
     delay(500);
    }
   }
