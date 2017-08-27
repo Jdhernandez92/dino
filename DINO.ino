@@ -22,7 +22,7 @@ void setup()  {
   }
   
 void loop() {
-  pirVal = digitalRead(pirPin)
+  pirVal = digitalRead(pirPin);
   if (pirVal == HIGH) {
     digitalWrite(Eyes, HIGH);
     delay(500);
