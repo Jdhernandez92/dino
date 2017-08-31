@@ -24,24 +24,24 @@ void setup()  {
 void loop() {
   pirVal = digitalRead(pirPin);
   if (pirVal == HIGH) {
-    digitalWrite(Eyes, HIGH);
     delay(500);
     activateSound(PIN);
-    delay(7000);
-    digitalWrite(Eyes, LOW);
     delay(500);
    }
   }
   
  void setupSound(int pin) {
-  pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);
+  pinMode(pin, INPUT);
+  digitalWrite(pin, LOW);
  }
  
  void activateSound(int pin) {
   digitalWrite(LED, HIGH);
-  digitalWrite(pin, LOW);
+  digitalWrite(Eyes, HIGH);
+  pinMode(pin, OUTPUT);
   delay(100);
-  digitalWrite(pin, HIGH);
+  pinMode(pin, INPUT);
+  delay(7000);
   digitalWrite(LED, LOW);
+  digitalWrite(Eyes, LOW);
  }
