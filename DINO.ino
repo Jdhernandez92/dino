@@ -9,6 +9,11 @@ I'm trying to learn as I go.
 
 If all goes well, I'm going to attach an LED to the eye on a cardboard cutout of a dinosaur.
 The PIR Sensor will activate the glowing eye and play dinosaur effects through my audio fx board.
+
+09/05/2017: The code has changed a lot since I started. I couldn't figure out how the "setupSound()" command worked
+so I just wrote it all out in the loop. I added a minimum time between activation so it wouldn't be annoying.
+
+everything seems to work out as planned.
 */
 
 int Eyes = 4; //LED for Dinosaur Eyes
@@ -16,7 +21,8 @@ int pirState = LOW;
 int pirVal = 0;
 int pirPin = 12;
 int PIN = 8; //trigger pin connected to Audio FX Soundboard
-int LED = 13; 
+int minSecsBetweenRoars = 40;
+long lastRoar = -minSecsBetweenRoars * 1000L;
 
 
 void setup()  {
@@ -25,31 +31,29 @@ void setup()  {
   pinMode(pirPin, INPUT);
   pinMode(LED, OUTPUT);
   pinMode(Eyes, OUTPUT);
-  setupSound(PIN);
+  pinMode(PIN, INPUT);
+  /* I am powering the soundboard with the 5v from my arduino uno. Setting my arduino trigger pin
+  to input sends it very little power and reduces chances of burning it out.
+  switching the pinMode to output then back to input in the loop works just like going from high to low
+  and will trigger the sound.
+   */
+  digitalWrite(PIN, LOW);
   delay(500);
   }
   
 void loop() {
   pirVal = digitalRead(pirPin);
-  if (pirVal == HIGH) {
+  if (pirVal == HIGH) { //if motion is triggered
+   if(now> (lastRoar + minSecsBetweenRoars * 1000L)) { //if it's been 40 seconds since last trigger
     delay(500);
-    activateSound(PIN);
+    digitalWrite(Eyes, HIGH); //turns on LED eyes
+    pinMode(PIN, OUTPUT); //see above
+    delay(300);
+    pinMode(PIN, INPUT);
+    lastRoar = now; //sets start point until it can be triggered again
+    delay(7000);
+    digitalWrite(Eyes, LOW);
     delay(500);
    }
   }
-  
- void setupSound(int pin) {
-  pinMode(pin, INPUT); //changed based on advice from adafruit CS on forums (link above)
-  digitalWrite(pin, LOW);
- }
- 
- void activateSound(int pin) {
-  digitalWrite(LED, HIGH);
-  digitalWrite(Eyes, HIGH);
-  pinMode(pin, OUTPUT);
-  delay(100);
-  pinMode(pin, INPUT);
-  digitalWrite(LED, LOW);
-  delay(7000); //trying to keep the Eyes of my dinosaur lit for a while after the sound plays.
-  digitalWrite(Eyes, LOW);
  }
