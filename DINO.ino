@@ -51,8 +51,8 @@ void loop() {
     delay(300);
     pinMode(PIN, INPUT);
     lastRoar = now; //sets start point until it can be triggered again
-    delay(7000);
-    digitalWrite(Eyes, LOW);
+    delay(7000); //keeps the LED eyes on for 7 seconds
+    digitalWrite(Eyes, LOW); //turns off LED eyes
     delay(500);
    }
   }
